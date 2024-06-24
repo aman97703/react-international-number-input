@@ -58,7 +58,7 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
   useEffect(() => {
     const formattedValue = value.toString().replace(".", decimalSeparator);
     setRawInput(prefix + formattedValue);
-  }, [changeFromParent, value, decimalSeparator, prefix]);
+  }, [changeFromParent]);
 
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
