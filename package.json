@@ -1,0 +1,33 @@
+{
+  "name": "react-international-number-input",
+  "version": "1.0.0",
+  "description": "A React component for international number input",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aman97703/react-international-number-input.git"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "international",
+    "number",
+    "input"
+  ],
+  "author": "Aman Gupta",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "typescript": "^4.9.5"
+  }
+}
