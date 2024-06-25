@@ -122,40 +122,40 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
     }
   };
 
-  useEffect(() => {
-    const input = inputRef.current;
-    const handleCursorPosition = () => {
-      if (
-        input &&
-        input.selectionStart !== null &&
-        input.selectionStart < prefix.length
-      ) {
-        input.setSelectionRange(prefix.length, prefix.length);
-      } else if (
-        input &&
-        input.selectionStart !== null &&
-        input.selectionEnd !== null &&
-        input.selectionEnd > rawInput.length - suffix.length
-      ) {
-        input.setSelectionRange(
-          rawInput.length - suffix.length,
-          rawInput.length - suffix.length
-        );
-      }
-    };
+  // useEffect(() => {
+  //   const input = inputRef.current;
+  //   const handleCursorPosition = () => {
+  //     if (
+  //       input &&
+  //       input.selectionStart !== null &&
+  //       input.selectionStart < prefix.length
+  //     ) {
+  //       input.setSelectionRange(prefix.length, prefix.length);
+  //     } else if (
+  //       input &&
+  //       input.selectionStart !== null &&
+  //       input.selectionEnd !== null &&
+  //       input.selectionEnd > rawInput.length - suffix.length
+  //     ) {
+  //       input.setSelectionRange(
+  //         rawInput.length - suffix.length,
+  //         rawInput.length - suffix.length
+  //       );
+  //     }
+  //   };
 
-    if (input) {
-      input.addEventListener("keydown", handleCursorPosition);
-      input.addEventListener("mousedown", handleCursorPosition);
-    }
+  //   if (input) {
+  //     input.addEventListener("keydown", handleCursorPosition);
+  //     input.addEventListener("mousedown", handleCursorPosition);
+  //   }
 
-    return () => {
-      if (input) {
-        input.removeEventListener("keydown", handleCursorPosition);
-        input.removeEventListener("mousedown", handleCursorPosition);
-      }
-    };
-  }, [prefix, suffix]);
+  //   return () => {
+  //     if (input) {
+  //       input.removeEventListener("keydown", handleCursorPosition);
+  //       input.removeEventListener("mousedown", handleCursorPosition);
+  //     }
+  //   };
+  // }, [prefix, suffix, rawInput.length]);
 
   return (
     <input

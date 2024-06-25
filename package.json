@@ -1,6 +1,6 @@
 {
   "name": "react-international-number-input",
-  "version": "1.0.3",
+  "version": "1.0.7",
   "description": "A React component for international number input with locale-specific formatting and optional prefix and suffix support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
