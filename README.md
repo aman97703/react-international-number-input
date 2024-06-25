@@ -35,7 +35,7 @@ yarn add react-international-number-input
 
 ```javascript
 import React, { useState } from 'react';
-import InternationalNumberInput from 'international-number-input';
+import InternationalNumberInput from 'react-international-number-input';
 
 const App = () => {
   const [value, setValue] = useState<number>(0);
