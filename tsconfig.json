@@ -1,19 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "lib": ["dom", "es2015"],
-    "allowJs": true,
-    "jsx": "react",
+    "target": "ES5",
+    "module": "ES6",
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./lib",
+    "declarationDir": "./dist",
+    "outDir": "./dist",
     "strict": true,
+    "jsx": "react",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  "include": ["src"]
 }
