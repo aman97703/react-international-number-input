@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, ChangeEvent, ClipboardEvent } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  ChangeEvent,
+  ClipboardEvent,
+} from "react";
 
 interface InternationalNumberInputProps {
   value: number;
@@ -9,6 +15,7 @@ interface InternationalNumberInputProps {
   changeFromParent?: boolean;
   disabled?: boolean;
   prefix?: string;
+  suffix?: string;
 }
 
 const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
@@ -20,15 +27,20 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
   changeFromParent,
   disabled,
   prefix = "",
+  suffix = "",
 }) => {
-  const [rawInput, setRawInput] = useState<string>(value ? `${prefix}${value}` : prefix);
+  const [rawInput, setRawInput] = useState<string>(
+    prefix + value.toString().replace(".", ",") + suffix
+  );
   const [decimalSeparator, setDecimalSeparator] = useState<string>(".");
   const userLocale = navigator.language || "en-US";
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const testNumber = 1.1;
-    const formattedNumber = new Intl.NumberFormat(userLocale).format(testNumber);
+    const formattedNumber = new Intl.NumberFormat(userLocale).format(
+      testNumber
+    );
     setDecimalSeparator(formattedNumber.includes(",") ? "," : ".");
   }, [userLocale]);
 
@@ -36,10 +48,17 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
     let inputValue = e.target.value;
 
     if (!inputValue.startsWith(prefix)) {
-      inputValue = prefix;
+      inputValue = prefix + inputValue;
     }
 
-    const actualValue = inputValue.slice(prefix.length);
+    if (!inputValue.endsWith(suffix)) {
+      inputValue = inputValue + suffix;
+    }
+
+    const actualValue = inputValue.slice(
+      prefix.length,
+      inputValue.length - suffix.length
+    );
     const validChars =
       decimalSeparator === "," ? /^[0-9]*,?[0-9]*$/ : /^[0-9]*\.?[0-9]*$/;
 
@@ -49,7 +68,7 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
     ) {
       setRawInput(inputValue);
       const normalizedValue = actualValue.replace(decimalSeparator, ".");
-      if (normalizedValue === "" || !isNaN(parseFloat(normalizedValue))) {
+      if (normalizedValue === "" || !isNaN(normalizedValue as any)) {
         handleChange(normalizedValue === "" ? 0 : parseFloat(normalizedValue));
       }
     }
@@ -57,7 +76,7 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
 
   useEffect(() => {
     const formattedValue = value.toString().replace(".", decimalSeparator);
-    setRawInput(prefix + formattedValue);
+    setRawInput(prefix + formattedValue + suffix);
   }, [changeFromParent]);
 
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
@@ -88,7 +107,9 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
         const normalizedValue = newValue.replace(decimalSeparator, ".");
 
         if (normalizedValue === "" || !isNaN(parseFloat(normalizedValue))) {
-          handleChange(normalizedValue === "" ? null : parseFloat(normalizedValue));
+          handleChange(
+            normalizedValue === "" ? null : parseFloat(normalizedValue)
+          );
         }
 
         setTimeout(() => {
@@ -104,10 +125,25 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
   useEffect(() => {
     const input = inputRef.current;
     const handleCursorPosition = () => {
-      if (input && input.selectionStart !== null && input.selectionStart < prefix.length) {
+      if (
+        input &&
+        input.selectionStart !== null &&
+        input.selectionStart < prefix.length
+      ) {
         input.setSelectionRange(prefix.length, prefix.length);
+      } else if (
+        input &&
+        input.selectionStart !== null &&
+        input.selectionEnd !== null &&
+        input.selectionEnd > rawInput.length - suffix.length
+      ) {
+        input.setSelectionRange(
+          rawInput.length - suffix.length,
+          rawInput.length - suffix.length
+        );
       }
     };
+
     if (input) {
       input.addEventListener("keydown", handleCursorPosition);
       input.addEventListener("mousedown", handleCursorPosition);
@@ -119,7 +155,7 @@ const InternationalNumberInput: React.FC<InternationalNumberInputProps> = ({
         input.removeEventListener("mousedown", handleCursorPosition);
       }
     };
-  }, [prefix]);
+  }, [prefix, suffix]);
 
   return (
     <input

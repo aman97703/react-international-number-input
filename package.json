@@ -1,13 +1,17 @@
 {
   "name": "react-international-number-input",
-  "version": "1.0.1",
-  "description": "A React component for international number input",
+  "version": "1.0.2",
+  "description": "A React component for international number input with locale-specific formatting and optional prefix and suffix support.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/aman97703/react-international-number-input.git"
@@ -18,7 +22,11 @@
     "component",
     "international",
     "number",
-    "input"
+    "input",
+    "number input",
+    "prefix",
+    "suffix",
+    "locale"
   ],
   "author": "Aman Gupta",
   "license": "MIT",
